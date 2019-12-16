@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
+
+    <changeSet id="create_users_table" author="jitendra">
+        <createTable tableName="users">
+            <column name="user_id" type="int" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true"></constraints>
+            </column>
+            <column name="phone_number" type="VARCHAR"></column>
+
+            <column name="created_at" type="BIGINT">
+                <constraints nullable="false"></constraints>
+            </column>
+            <column name="updated_at" type="BIGINT">
+                <constraints nullable="false"></constraints>
+            </column>
+            <column name="status" type="int"></column>
+        </createTable>
+
+        <addUniqueConstraint
+                columnNames="phone_number"
+                constraintName="unique_phone_number"
+                tableName="users"
+        />
+
+        <insert tableName="users">
+            <column name="phone_number" value="1234567890"></column>
+            <column name="created_at" valueComputed="(SELECT EXTRACT(EPOCH FROM TIMESTAMP '${now()}') * 1000)"></column>
+            <column name="updated_at" valueComputed="(SELECT EXTRACT(EPOCH FROM TIMESTAMP '${now()}') * 1000)"></column>
+            <column name="status" value="1"></column>
+        </insert>
+        <insert tableName="users">
+            <column name="phone_number" value="1234567891"></column>
+            <column name="created_at" valueComputed="(SELECT EXTRACT(EPOCH FROM TIMESTAMP '${now()}') * 1000)"></column>
+            <column name="updated_at" valueComputed="(SELECT EXTRACT(EPOCH FROM TIMESTAMP '${now()}') * 1000)"></column>
+            <column name="status" value="1"></column>
+        </insert>
+        <insert tableName="users">
+            <column name="phone_number" value="1234567892"></column>
+            <column name="created_at" valueComputed="(SELECT EXTRACT(EPOCH FROM TIMESTAMP '${now()}') * 1000)"></column>
+            <column name="updated_at" valueComputed="(SELECT EXTRACT(EPOCH FROM TIMESTAMP '${now()}') * 1000)"></column>
+            <column name="status" value="1"></column>
+        </insert>
+    </changeSet>
+
+    <changeSet id="create_user_credential_table" author="jitendra">
+        <createTable tableName="user_credential">
+            <column name="user_credential_id" type="int" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true"></constraints>
+            </column>
+            <column name="user_id" type="int">
+                <constraints nullable="false" foreignKeyName="fk_user_and_user_credential" references="users(user_id)"></constraints>
+            </column>
+            <column name="email_id" type="VARCHAR">
+                <constraints nullable="false"></constraints>
+            </column>
+            <column name="password" type="VARCHAR">
+                <constraints nullable="false"></constraints>
+            </column>
+            <column name="set_password_token" type="VARCHAR"/>
+            <column name="set_password_token_expiry" type="BIGINT"/>
+            <column name="created_at" type="BIGINT">
+                <constraints nullable="false"></constraints>
+            </column>
+            <column name="updated_at" type="BIGINT">
+                <constraints nullable="false"></constraints>
+            </column>
+        </createTable>
+
+        <addUniqueConstraint
+                columnNames="email_id"
+                constraintName="unique_email_id"
+                tableName="user_credential"
+        />
+        <addUniqueConstraint
+                columnNames="user_credential_id,user_id"
+                constraintName="unique_user_id_and_id"
+                tableName="user_credential"
+        />
+        <insert tableName="user_credential">
+            <column name="user_id" value="1"></column>
+            <column name="email_id" value="admin@auth.com"></column>
+
+            <!--password is   Test@1230   -->
+            <column name="password" value="$2a$04$xXnv/kWpPdXX6ZQd01JgmOrv575sVfQsFGkNyAbYI7/fWqWp3yjoq"></column>
+            <column name="created_at" valueComputed="(SELECT EXTRACT(EPOCH FROM TIMESTAMP '${now()}') * 1000)"></column>
+            <column name="updated_at" valueComputed="(SELECT EXTRACT(EPOCH FROM TIMESTAMP '${now()}') * 1000)"></column>
+        </insert>
+        <insert tableName="user_credential">
+            <column name="user_id" value="2"></column>
+            <column name="email_id" value="pm@auth.com"></column>
+
+            <!--password is   Test@1231   -->
+            <column name="password" value="$2a$04$u8sWtXV.ksgOuaFW8kiiNeNalpuk25wkr0vs.7cWaNd/i3lTtMr5a"></column>
+            <column name="created_at" valueComputed="(SELECT EXTRACT(EPOCH FROM TIMESTAMP '${now()}') * 1000)"></column>
+            <column name="updated_at" valueComputed="(SELECT EXTRACT(EPOCH FROM TIMESTAMP '${now()}') * 1000)"></column>
+        </insert>
+
+        <insert tableName="user_credential">
+            <column name="user_id" value="3"></column>
+            <column name="email_id" value="dev@auth.com"></column>
+
+            <!--password is   Test@1232   -->
+            <column name="password" value="$2a$04$fxpkKiPeopvHZJxhXGekiedJoyWO6qtuPKOm43tvsHbZZIw.hED5S"></column>
+            <column name="created_at" valueComputed="(SELECT EXTRACT(EPOCH FROM TIMESTAMP '${now()}') * 1000)"></column>
+            <column name="updated_at" valueComputed="(SELECT EXTRACT(EPOCH FROM TIMESTAMP '${now()}') * 1000)"></column>
+        </insert>
+
+
+
+    </changeSet>
+
+    <changeSet id="create_role_table" author="jitendra">
+        <createTable tableName="role">
+            <column name="role_id" type="int" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true"></constraints>
+            </column>
+            <column name="name" type="VARCHAR">
+                <constraints nullable="false"></constraints>
+            </column>
+            <column name="created_at" type="BIGINT">
+                <constraints nullable="false"></constraints>
+            </column>
+            <column name="updated_at" type="BIGINT">
+                <constraints nullable="false"></constraints>
+            </column>
+        </createTable>
+
+        <insert tableName="role">
+            <column name="role_id" value= "1"></column>
+            <column name="name" value="ROLE_ADMIN"></column>
+            <column name="created_at" valueComputed="(SELECT EXTRACT(EPOCH FROM TIMESTAMP '${now()}') * 1000)"></column>
+            <column name="updated_at" valueComputed="(SELECT EXTRACT(EPOCH FROM TIMESTAMP '${now()}') * 1000)"></column>
+        </insert>
+        <insert tableName="role">
+            <column name="role_id" value= "2"></column>
+            <column name="name" value="ROLE_PM"></column>
+            <column name="created_at" valueComputed="(SELECT EXTRACT(EPOCH FROM TIMESTAMP '${now()}') * 1000)"></column>
+            <column name="updated_at" valueComputed="(SELECT EXTRACT(EPOCH FROM TIMESTAMP '${now()}') * 1000)"></column>
+        </insert>
+
+        <insert tableName="role">
+            <column name="role_id" value= "3"></column>
+            <column name="name" value="ROLE_DEV"></column>
+            <column name="created_at" valueComputed="(SELECT EXTRACT(EPOCH FROM TIMESTAMP '${now()}') * 1000)"></column>
+            <column name="updated_at" valueComputed="(SELECT EXTRACT(EPOCH FROM TIMESTAMP '${now()}') * 1000)"></column>
+        </insert>
+
+        <insert tableName="role">
+            <column name="role_id" value= "4"></column>
+            <column name="name" value="ROLE_USER"></column>
+            <column name="created_at" valueComputed="(SELECT EXTRACT(EPOCH FROM TIMESTAMP '${now()}') * 1000)"></column>
+            <column name="updated_at" valueComputed="(SELECT EXTRACT(EPOCH FROM TIMESTAMP '${now()}') * 1000)"></column>
+        </insert>
+
+
+    </changeSet>
+
+    <changeSet id="create_user_role_table" author="jitendra">
+        <createTable tableName="user_role">
+            <column name="user_role_id" type="int" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true"></constraints>
+            </column>
+            <column name="user_id" type="int">
+                <constraints nullable="false" foreignKeyName="fk_user_role_and_user" references="users(user_id)"></constraints>
+            </column>
+            <column name="role_id" type="int">
+                <constraints nullable="false" foreignKeyName="fk_user_role_and_role" references="role(role_id)"></constraints>
+            </column>
+            <column name="created_at" type="BIGINT">
+                <constraints nullable="false"></constraints>
+            </column>
+            <column name="updated_at" type="BIGINT">
+                <constraints nullable="false"></constraints>
+            </column>
+        </createTable>
+        <insert tableName="user_role">
+            <column name="user_id" value="1"></column>
+            <column name="role_id" value="1"></column>
+            <column name="created_at" valueComputed="(SELECT EXTRACT(EPOCH FROM TIMESTAMP '${now()}') * 1000)"></column>
+            <column name="updated_at" valueComputed="(SELECT EXTRACT(EPOCH FROM TIMESTAMP '${now()}') * 1000)"></column>
+        </insert>
+        <insert tableName="user_role">
+            <column name="user_id" value="2"></column>
+            <column name="role_id" value="2"></column>
+            <column name="created_at" valueComputed="(SELECT EXTRACT(EPOCH FROM TIMESTAMP '${now()}') * 1000)"></column>
+            <column name="updated_at" valueComputed="(SELECT EXTRACT(EPOCH FROM TIMESTAMP '${now()}') * 1000)"></column>
+        </insert>
+        <insert tableName="user_role">
+            <column name="user_id" value="3"></column>
+            <column name="role_id" value="3"></column>
+            <column name="created_at" valueComputed="(SELECT EXTRACT(EPOCH FROM TIMESTAMP '${now()}') * 1000)"></column>
+            <column name="updated_at" valueComputed="(SELECT EXTRACT(EPOCH FROM TIMESTAMP '${now()}') * 1000)"></column>
+        </insert>
+    </changeSet>
+
+
+    <changeSet id="create_user_owner_user_table" author="jitendra">
+        <createTable tableName="user_owner_user">
+            <column name="user_owner_user_id" type="int" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true"></constraints>
+            </column>
+            <column name="user_id" type="int">
+                <constraints nullable="false" foreignKeyName="fk_user_owner_and_user" references="users(user_id)"></constraints>
+            </column>
+            <column name="user_owner_id" type="int">
+                <constraints nullable="false" foreignKeyName="fk_user_owner_user_and_user" references="users(user_id)"></constraints>
+            </column>
+            <column name="created_at" type="BIGINT">
+                <constraints nullable="false"></constraints>
+            </column>
+            <column name="updated_at" type="BIGINT">
+                <constraints nullable="false"></constraints>
+            </column>
+
+        </createTable>
+        <insert tableName="user_owner_user">
+            <column name="user_id" value="2"></column>
+            <column name="user_owner_id" value="1"></column>
+            <column name="created_at" valueComputed="(SELECT EXTRACT(EPOCH FROM TIMESTAMP '${now()}') * 1000)"></column>
+            <column name="updated_at" valueComputed="(SELECT EXTRACT(EPOCH FROM TIMESTAMP '${now()}') * 1000)"></column>
+        </insert>
+        <insert tableName="user_owner_user">
+            <column name="user_id" value="3"></column>
+            <column name="user_owner_id" value="2"></column>
+            <column name="created_at" valueComputed="(SELECT EXTRACT(EPOCH FROM TIMESTAMP '${now()}') * 1000)"></column>
+            <column name="updated_at" valueComputed="(SELECT EXTRACT(EPOCH FROM TIMESTAMP '${now()}') * 1000)"></column>
+        </insert>
+    </changeSet>
+    <changeSet id="create_gender_table" author="jitendra">
+        <createTable tableName="gender">
+            <column name="gender_id" type="int" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true"></constraints>
+            </column>
+            <column name="gender_name" type="VARCHAR">
+                <constraints nullable="false"></constraints>
+            </column>
+            <column name="created_at" type="BIGINT">
+                <constraints nullable="false"></constraints>
+            </column>
+            <column name="updated_at" type="BIGINT">
+                <constraints nullable="false"></constraints>
+            </column>
+        </createTable>
+        <insert tableName="gender">
+            <column name="gender_id" value="1"></column>
+            <column name="gender_name" value="FEMALE"></column>
+            <column name="created_at" valueComputed="(SELECT EXTRACT(EPOCH FROM TIMESTAMP '${now()}') * 1000)"></column>
+            <column name="updated_at" valueComputed="(SELECT EXTRACT(EPOCH FROM TIMESTAMP '${now()}') * 1000)"></column>
+        </insert>
+        <insert tableName="gender">
+            <column name="gender_id" value="2"></column>
+            <column name="gender_name" value="MALE"></column>
+            <column name="created_at" valueComputed="(SELECT EXTRACT(EPOCH FROM TIMESTAMP '${now()}') * 1000)"></column>
+            <column name="updated_at" valueComputed="(SELECT EXTRACT(EPOCH FROM TIMESTAMP '${now()}') * 1000)"></column>
+        </insert>
+        <insert tableName="gender">
+            <column name="gender_id" value="3"></column>
+            <column name="gender_name" value="OTHER"></column>
+            <column name="created_at" valueComputed="(SELECT EXTRACT(EPOCH FROM TIMESTAMP '${now()}') * 1000)"></column>
+            <column name="updated_at" valueComputed="(SELECT EXTRACT(EPOCH FROM TIMESTAMP '${now()}') * 1000)"></column>
+        </insert>
+    </changeSet>
+    <changeSet id="crate_user_details_table" author="jitendra">
+        <createTable tableName="user_detail">
+            <column name="user_details_id" type="int" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true"></constraints>
+            </column>
+            <column name="user_id" type="int">
+                <constraints nullable="false" foreignKeyName="fk_user_detail_and_user" references="users(user_id)"></constraints>
+            </column>
+            <column name="gender_id" type="int">
+                <constraints nullable="false" foreignKeyName="fk_user_detail_and_gender" references="gender(gender_id)"></constraints>
+            </column>
+            <column name="name" type="VARCHAR"></column>
+            <column name="created_at" type="BIGINT">
+                <constraints nullable="false"></constraints>
+            </column>
+            <column name="updated_at" type="BIGINT">
+                <constraints nullable="false"></constraints>
+            </column>
+        </createTable>
+        <insert tableName="user_detail">
+            <column name="user_id" value="1"></column>
+            <column name="name" value="Timtim"></column>
+            <column name="gender_id" value="1"></column>
+            <column name="created_at" valueComputed="(SELECT EXTRACT(EPOCH FROM TIMESTAMP '${now()}') * 1000)"></column>
+            <column name="updated_at" valueComputed="(SELECT EXTRACT(EPOCH FROM TIMESTAMP '${now()}') * 1000)"></column>
+        </insert>
+        <insert tableName="user_detail">
+            <column name="user_id" value="2"></column>
+            <column name="name" value="Kukku"></column>
+            <column name="gender_id" value="2"></column>
+            <column name="created_at" valueComputed="(SELECT EXTRACT(EPOCH FROM TIMESTAMP '${now()}') * 1000)"></column>
+            <column name="updated_at" valueComputed="(SELECT EXTRACT(EPOCH FROM TIMESTAMP '${now()}') * 1000)"></column>
+        </insert>
+        <insert tableName="user_detail">
+            <column name="user_id" value="3"></column>
+            <column name="name" value="Titu"></column>
+            <column name="gender_id" value="2"></column>
+            <column name="created_at" valueComputed="(SELECT EXTRACT(EPOCH FROM TIMESTAMP '${now()}') * 1000)"></column>
+            <column name="updated_at" valueComputed="(SELECT EXTRACT(EPOCH FROM TIMESTAMP '${now()}') * 1000)"></column>
+        </insert>
+    </changeSet>
+
+
+
+</databaseChangeLog>
