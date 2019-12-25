@@ -23,6 +23,14 @@ public class UserOwnerUser extends BusinessItem{
     @JoinColumn(name = "user_owner_id", referencedColumnName = "user_id")
     private User userOwner;
 
+    public UserOwnerUser() {
+    }
+
+    public UserOwnerUser(User user, User userOwner) {
+        this.user = user;
+        this.userOwner = userOwner;
+    }
+
     public int getUserOwnerUserId() {
         return userOwnerUserId;
     }

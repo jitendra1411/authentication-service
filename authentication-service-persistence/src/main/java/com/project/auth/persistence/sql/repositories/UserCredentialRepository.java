@@ -11,4 +11,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface UserCredentialRepository extends JpaRepository<UserCredential, Integer> {
     public UserCredential findByEmailId(String emailId);
+    public UserCredential findByPasswordToken(String passwordToken);
 }

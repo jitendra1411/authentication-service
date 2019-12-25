@@ -26,10 +26,10 @@ public class UserCredential extends BusinessItem{
     private String password;
 
     @Column(name = "set_password_token")
-    private String setPasswordToken;
+    private String passwordToken;
 
     @Column(name = "set_password_token_expiry")
-    private Long setPasswordTokenExpiry;
+    private Long passwordTokenExpiry;
 
     public UserCredential() {
     }
@@ -39,8 +39,8 @@ public class UserCredential extends BusinessItem{
         this.user = userCredential.getUser();
         this.emailId = userCredential.getEmailId();
         this.password = userCredential.getPassword();
-        this.setPasswordToken = userCredential.getSetPasswordToken();
-        this.setPasswordTokenExpiry = userCredential.getSetPasswordTokenExpiry();
+        this.passwordToken = userCredential.getPasswordToken();
+        this.passwordTokenExpiry = userCredential.getPasswordTokenExpiry();
     }
 
     public String getEmailId() {
@@ -75,19 +75,19 @@ public class UserCredential extends BusinessItem{
         this.password = password;
     }
 
-    public String getSetPasswordToken() {
-        return setPasswordToken;
+    public String getPasswordToken() {
+        return passwordToken;
     }
 
-    public void setSetPasswordToken(String setPasswordToken) {
-        this.setPasswordToken = setPasswordToken;
+    public void setPasswordToken(String passwordToken) {
+        this.passwordToken = passwordToken;
     }
 
-    public Long getSetPasswordTokenExpiry() {
-        return setPasswordTokenExpiry;
+    public Long getPasswordTokenExpiry() {
+        return passwordTokenExpiry;
     }
 
-    public void setSetPasswordTokenExpiry(Long setPasswordTokenExpiry) {
-        this.setPasswordTokenExpiry = setPasswordTokenExpiry;
+    public void setPasswordTokenExpiry(Long passwordTokenExpiry) {
+        this.passwordTokenExpiry = passwordTokenExpiry;
     }
 }

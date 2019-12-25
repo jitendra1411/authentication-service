@@ -22,6 +22,14 @@ public class UserRole extends BusinessItem{
     @JoinColumn(name = "role_id", referencedColumnName = "role_id")
     private Role role;
 
+    public UserRole() {
+    }
+
+    public UserRole(User user, Role role) {
+        this.user = user;
+        this.role = role;
+    }
+
     public int getUserRoleId() {
         return userRoleId;
     }

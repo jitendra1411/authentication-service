@@ -15,9 +15,6 @@ public class User extends BusinessItem{
     @Column(name = "user_id")
     private int userId;
 
-    @Column(name = "email_id")
-    private String emailId;
-
     @Column(name = "phone_number")
     private String phoneNumber;
 
@@ -30,14 +27,6 @@ public class User extends BusinessItem{
 
     public void setUserId(int userId) {
         this.userId = userId;
-    }
-
-    public String getEmailId() {
-        return emailId;
-    }
-
-    public void setEmailId(String emailId) {
-        this.emailId = emailId;
     }
 
     public String getPhoneNumber() {

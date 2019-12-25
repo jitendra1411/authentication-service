@@ -11,7 +11,7 @@ import javax.persistence.*;
 public class UserDetail extends BusinessItem{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_detail_id")
+    @Column(name = "user_details_id")
     private int userDetailId;
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
